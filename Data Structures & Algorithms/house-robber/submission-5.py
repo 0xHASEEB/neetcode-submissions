@@ -1,0 +1,15 @@
+class Solution:        
+    def rob(self, nums: List[int]) -> int:
+        def _rob(i):
+            if i >= len(nums):
+                return 0
+            with_i = nums[i] + _rob(i+2)
+            without_i = _rob(i+1)
+            return max(with_i, without_i)
+        length = len(nums)
+        d = {length: 0, length+1: 0}
+        for i in range(length-1, -1, -1):
+            with_i = nums[i] + d[i+2]
+            without_i = d[i+1]
+            d[i] = max(with_i, without_i)
+        return d[0]
